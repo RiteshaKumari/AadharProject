@@ -1,0 +1,34 @@
+﻿@model Aadhar1.Models.email
+
+@{
+    ViewBag.Title = "email_update";
+}
+
+@using (Html.BeginForm("email_update", "Home", FormMethod.Post))
+{
+    <div class="wrapper">
+        <div class="consign">
+
+            <div class="title"><p>Email</p></div>
+            <p class="view"> @TempData["message1"]</p><br />
+
+
+
+            <label>Enter Email</label> <br />
+            @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control", @placeholder = "abc@gmail.com" })
+            @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+
+            
+            <br />
+
+
+            <input class="subbtn" type="submit" value="Send OTP">
+
+
+
+        </div>
+    </div>
+
+
+}
+

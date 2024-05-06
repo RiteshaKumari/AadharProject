@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Signin1";
+}
+
+@model Aadhar1.Models.signin
+
+@{
+    ViewBag.Title = "signin";
+}
+
+
+
+@using (Html.BeginForm("Signin", "Home", FormMethod.Post))
+{
+    <div class="wrapper">
+        <div class="consign">
+
+            <div class="title"><p>Login</p></div>
+            <p class="view"> @ViewBag.Messagelog</p><br />
+
+
+
+            <label>Email</label> <br />
+            @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control", @placeholder = "abc@gmail.com" })
+            @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+            <br />
+
+            <label>Password</label> <br />
+            @Html.TextBoxFor(e => e.Pass, null, new { @class = "form-control", @type = "password", @placeholder = "Password" })
+            @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
+            <br />
+            <br />
+            <div class="rem">
+                @Html.CheckBoxFor(e => e.remember)
+                <label>&nbsp; Remember Me?</label>
+            </div>
+            <input type="submit" value="Login" class="subbtn" />
+            @Html.ActionLink("Forget Password", "emailValidation", "forget")
+            <br />
+            <div class="sign">
+                <p>Don't have account yet?</p>&nbsp;@Html.ActionLink("Signup", "Signup", "Home")
+
+            </div>
+        </div>
+    </div>
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            }
+        </script>
+    }
+}
+

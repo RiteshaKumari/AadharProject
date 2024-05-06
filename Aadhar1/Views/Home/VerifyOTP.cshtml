@@ -1,0 +1,35 @@
+﻿@model Aadhar1.Models.VerifyOTP
+@{
+    ViewBag.Title = "VerifyOTP";
+}
+
+
+@using (Html.BeginForm("VerifyOTP", "Home", FormMethod.Post))
+{
+    <div class="wrapper" >
+        
+        <div class="consign">
+        
+            <div class="title"><p>Verification</p></div>
+            <p class="view"> @TempData["message1"]</p><br />
+
+            @if (TempData["otpMess"] != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Alert:- </strong>@TempData["otpMess"]
+                </div>
+            }
+                <label>Enter OTP send to your Email</label> <br />
+                @Html.TextBoxFor(e => e.OTP, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(e => e.OTP, null, new { @class = "text-danger" })
+                <br />
+
+                <input type="submit" value="Submit" class="subbtn" />
+            </div>
+        </div>
+}
+            
+
+
+
+

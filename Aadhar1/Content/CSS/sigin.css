@@ -1,0 +1,58 @@
+﻿.Body {
+}
+
+.subbtn {
+    padding: 5px 15px;
+    background-color: white;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+    .subbtn:hover {
+        background-color: transparent;
+        border: 2px solid white;
+    }
+
+.btn:hover {
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+.sign {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    background-image: linear-gradient( 45deg, rgb(245, 128, 128), rgb(230, 230, 111) );
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    min-width: 800px;
+}
+
+.consign {
+    border: 2px solid black;
+    margin: auto;
+    width: 300px;
+    padding: 20px;
+    box-shadow: 5px 10px 8px 13px black;
+    border-radius: 30px;
+}
+
+.rem {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.title {
+    color: red;
+    font-size: 5rem;
+    font-weight: 200;
+}

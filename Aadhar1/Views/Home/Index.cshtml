@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="index">
+    <h1 class="heading">Hey! Login to get your Aadhar.</h1><br />
+    <div class="conaadhar">
+        <div class="text">
+            <h4 class="headaadhar">Why Aadhar is Important?</h4><br />
+            <p>
+                The Aadhar card is a biometric card that stores the personal details of the individual in the database of the government,
+                and it is becoming the government’s base for the welfare of the common citizens and their services. It is a unique number of twelve
+                digits that is issued to every citizen of India which is a centralized and universal identification number. It is based on the biometric,
+                and the demographic data that is collected by the Unique Identification Authority of India abbreviated as
+                UIDAI. The Aadhar card is extremely useful for both the government and the citizens of the country.
+            </p>
+
+        </div>
+        @Html.Partial("~/Views/_PartialView.cshtml");
+    </div>
+
+</div>
+@*@if (TempData["message1"] != null)
+       {
+    <script type="text/javascript">
+                window.onload = function () {
+                    alert("@TempData["message1"]");
+                }
+    </script>
+        }*@
+      
+
+           

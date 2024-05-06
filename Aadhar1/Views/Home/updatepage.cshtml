@@ -1,0 +1,61 @@
+﻿@model Aadhar1.Models.updatepage
+
+<style>
+    .green{
+        color:green;
+    }
+</style>
+
+@using (Html.BeginForm("updatepage", "Home", FormMethod.Post))
+{
+    <div class="wrapper1">
+        <div class="consign1">
+            <div class="title"><h1>Update Your Details</h1></div><br /> <p class="view">@TempData["message"] </p>
+            <p class="green">@TempData["alert"]</p><br /><br />
+            <div class="con">
+                <div>
+                    @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control", type="hidden" })
+                    @Html.ValidationMessageFor(e => e.ID, null, new { @class = "text-danger", type = "hidden" })
+
+                    @Html.Label("Firstname")<br />
+                    @Html.TextBoxFor(e => e.Firstname, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(e => e.Firstname, null, new { @class = "text-danger" })
+                    <br />
+
+                    @Html.Label("Email")<br />
+                    @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+                    <p class="view">@ViewBag.Email</p>
+                    <br />
+
+                    @Html.Label("Mobile")<br />
+                    @Html.TextBoxFor(e => e.Mobile, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(e => e.Mobile, null, new { @class = "text-danger" })
+                    <br />
+
+
+                    @Html.Label("Pass")<br />
+                    @Html.TextBoxFor(e => e.Pass, null, new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
+                    <br />
+
+
+                    @Html.Label("ConPass")<br />
+                    @Html.TextBoxFor(e => e.ConPass, null, new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessageFor(e => e.ConPass, null, new { @class = "text-danger" })
+                    <br />
+                </div>
+            </div>
+            <div class="con1">
+               
+                @Html.ActionLink("Submit", "updatepage", "Home")
+
+            </div>
+
+
+        </div>
+    </div>
+}
+}
+
+
