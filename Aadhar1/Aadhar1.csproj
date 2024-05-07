@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\email.cs" />
+    <Compile Include="Models\emailValidation.cs" />
     <Compile Include="Models\password_for.cs" />
     <Compile Include="Models\signin.cs" />
     <Compile Include="Models\signup.cs" />
@@ -134,9 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\CSS\index.css" />
     <Content Include="Content\CSS\sigin.css" />
-    <Content Include="Content\CSS\signup.css" />
     <Content Include="Content\CSS\welcome.css" />
     <Content Include="Content\image\aadharflag.jpg" />
     <Content Include="Content\image\icons8-india-48.png" />
@@ -177,6 +176,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
+    <Content Include="Views\Home\emailValidation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

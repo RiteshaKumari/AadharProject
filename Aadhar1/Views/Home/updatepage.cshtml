@@ -1,61 +1,194 @@
 ﻿@model Aadhar1.Models.updatepage
 
 <style>
-    .green{
-        color:green;
+    @@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+    .green {
+        color: green;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .signupcontainer {
+        height: 100vh;
+        width: 100%;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(253, 101, 133, 1) 0%, rgba(255, 211, 165, 1) 90% );
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: fit-content;
+        background-color: #ffffff;
+        padding: 10px 30px;
+    }
+
+    .card_title {
+        text-align: center;
+        padding: 10px;
+    }
+
+        .card_title h1 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+     input {
+        margin: 10px 0;
+        width: 100%;
+        background-color: #e2e2e2;
+        border: none;
+        outline: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #31283B;
+        color: #ffffff;
+        font-size: 16px;
+        outline: none;
+        border-radius: 5px;
+        border: none;
+        padding: 8px 15px;
+        width: 100%;
+        margin: 15px 0px 15px 0px;
+    }
+
+         button:hover {
+            background-color: #31283B;
+        }
+
+     span {
+        color: red;
+    }
+
+    .card_terms {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
+        .card_terms input[type="checkbox"] {
+            background-color: #e2e2e2;
+        }
+
+        .card_terms span {
+            margin: 5px;
+            font-size: 13px;
+        }
+
+    .card a {
+        color: #4796ff;
+        text-decoration: none;
+    }
+
+    .alert, strong {
+        color: red;
     }
 </style>
 
 @using (Html.BeginForm("updatepage", "Home", FormMethod.Post))
 {
-    <div class="wrapper1">
-        <div class="consign1">
-            <div class="title"><h1>Update Your Details</h1></div><br /> <p class="view">@TempData["message"] </p>
-            <p class="green">@TempData["alert"]</p><br /><br />
-            <div class="con">
-                <div>
-                    @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control", type="hidden" })
-                    @Html.ValidationMessageFor(e => e.ID, null, new { @class = "text-danger", type = "hidden" })
+    @*<div class="wrapper1">
+            <div class="consign1">
+                <div class="title"><h1>Update Your Details</h1></div><br /> <p class="view">@TempData["message"] </p>
+                <p class="green">@TempData["alert"]</p><br /><br />
+                <div class="con">
+                    <div>
+                        @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control", type="hidden" })
+                        @Html.ValidationMessageFor(e => e.ID, null, new { @class = "text-danger", type = "hidden" })
 
-                    @Html.Label("Firstname")<br />
-                    @Html.TextBoxFor(e => e.Firstname, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(e => e.Firstname, null, new { @class = "text-danger" })
-                    <br />
+                        @Html.Label("Firstname")<br />
+                        @Html.TextBoxFor(e => e.Firstname, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(e => e.Firstname, null, new { @class = "text-danger" })
+                        <br />
 
-                    @Html.Label("Email")<br />
-                    @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
-                    <p class="view">@ViewBag.Email</p>
-                    <br />
+                        @Html.Label("Email")<br />
+                        @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+                        <p class="view">@ViewBag.Email</p>
+                        <br />
 
-                    @Html.Label("Mobile")<br />
-                    @Html.TextBoxFor(e => e.Mobile, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(e => e.Mobile, null, new { @class = "text-danger" })
-                    <br />
-
-
-                    @Html.Label("Pass")<br />
-                    @Html.TextBoxFor(e => e.Pass, null, new { @class = "form-control", @type = "password" })
-                    @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
-                    <br />
+                        @Html.Label("Mobile")<br />
+                        @Html.TextBoxFor(e => e.Mobile, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(e => e.Mobile, null, new { @class = "text-danger" })
+                        <br />
 
 
-                    @Html.Label("ConPass")<br />
-                    @Html.TextBoxFor(e => e.ConPass, null, new { @class = "form-control", @type = "password" })
-                    @Html.ValidationMessageFor(e => e.ConPass, null, new { @class = "text-danger" })
-                    <br />
+                        @Html.Label("Pass")<br />
+                        @Html.TextBoxFor(e => e.Pass, null, new { @class = "form-control", @type = "password" })
+                        @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
+                        <br />
+
+
+                        @Html.Label("ConPass")<br />
+                        @Html.TextBoxFor(e => e.ConPass, null, new { @class = "form-control", @type = "password" })
+                        @Html.ValidationMessageFor(e => e.ConPass, null, new { @class = "text-danger" })
+                        <br />
+                    </div>
                 </div>
-            </div>
-            <div class="con1">
-               
-                @Html.ActionLink("Submit", "updatepage", "Home")
+                <div class="con1">
+
+                    @Html.ActionLink("Submit", "updatepage", "Home")
+
+                </div>
+
 
             </div>
+        </div>*@
+
+
+    <div class="signupcontainer">
+        <div class="card">
+            <div class="card_title">
+                <h1>Update Your Account</h1>
+               
+                <p class="green">@TempData["alert"]</p><br />
+            </div>
+            @if (TempData["message"] != null)
+            {
+                <div class="alert">
+                    <strong>Message :-</strong>@TempData["message"]
+                </div>
+
+            }
+
+            @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control", type = "hidden" })
+            @Html.ValidationMessageFor(e => e.ID, null, new { @class = "text-danger", type = "hidden" })
+
+            @Html.TextBoxFor(e => e.Firstname, null, new { placeholder = "Firstname", @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.Firstname, null, new { @class = "text-danger" })
+
+            @Html.TextBoxFor(e => e.Email, null, new { placeholder = "Email", @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+            <p class="view">@ViewBag.Email</p>
+
+            @Html.TextBoxFor(e => e.Mobile, null, new { placeholder = "Mobile", @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.Mobile, null, new { @class = "text-danger" })
+
+            @Html.TextBoxFor(e => e.Pass, null, new { @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
+
+            @Html.TextBoxFor(e => e.ConPass, null, new { @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(e => e.ConPass, null, new { @class = "text-danger" })
+            <button>@Html.ActionLink("Submit", "updatepage", "Home")</button>
 
 
         </div>
-    </div>
+           
+        </div>
+  
 }
-}
+
 
 

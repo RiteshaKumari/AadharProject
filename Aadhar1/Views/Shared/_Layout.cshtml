@@ -4,70 +4,243 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-   
+    
+
+
     <link rel="icon" type="image/x-icon" href="/Content/image/icons8-india-48.png">
-    <link href="~/Content/CSS/welcome.css" rel="stylesheet" />
-    <link href="~/Content/CSS/signup.css" rel="stylesheet" />
+    <link href="/Content/CSS/welcome.css" rel="stylesheet" />
     <link href="~/Content/CSS/sigin.css" rel="stylesheet" />
-    <link href="~/Content/CSS/index.css" rel="stylesheet" />
+
     <style>
-        .rig {
-            float: right !important;
+        :root {
+            --color-1: #2f3240;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #e8eef3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1170px;
+            margin: auto;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+        /*header*/
+        .header {
+            background-color: var(--color-1);
+            padding: 12px 0;
+            line-height: 1.5;
+        }
+
+            .header .logo,
+            .header .nav {
+                padding: 0 15px;
+            }
+
+                .header .logo a {
+                    font-size: 30px;
+                    color: #ffffff;
+                    text-transform: capitalize;
+                }
+
+                .header .nav ul li {
+                    display: inline-block;
+                    margin-left: 40px;
+                }
+
+                    .header .nav ul li a {
+                        display: block;
+                        font-size: 16px;
+                        text-transform: capitalize;
+                        color: #ffffff;
+                        padding: 10px 0;
+                        transition: all 0.5s ease;
+                    }
+
+                        .header .nav ul li a.active,
+                        .header .nav ul li a:hover {
+                            color: #f3a93d;
+                        }
+
+        .nav-toggler {
+            height: 34px;
+            width: 44px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            display: none;
+            margin-right: 15px;
+        }
+
+            .nav-toggler:focus {
+                outline: none;
+                box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            }
+
+            .nav-toggler span {
+                height: 2px;
+                width: 20px;
+                background-color: var(--color-1);
+                display: block;
+                margin: auto;
+                position: relative;
+                transition: all 0.3s ease;
+            }
+
+            .nav-toggler.active span {
+                background-color: transparent;
+            }
+
+            .nav-toggler span::before,
+            .nav-toggler span::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: var(--color-1);
+                transition: all 0.3s ease;
+            }
+
+            .nav-toggler span::before {
+                transform: translateY(-6px);
+            }
+
+            .nav-toggler.active span::before {
+                transform: rotate(45deg);
+            }
+
+            .nav-toggler span::after {
+                transform: translateY(6px);
+            }
+
+            .nav-toggler.active span::after {
+                transform: rotate(135deg);
+            }
+
+        @@media(max-width:991px) {
+            .nav-toggler {
+                display: block;
+            }
+
+            .header .nav {
+                width: 100%;
+                padding: 0;
+                max-height: 0px;
+                overflow: hidden;
+                visibility: hidden;
+                transition: all 0.5s ease;
+            }
+
+                .header .nav.open {
+                    visibility: visible;
+                }
+
+                .header .nav ul {
+                    padding: 12px 15px 0;
+                    margin-top: 12px;
+                    border-top: 1px solid rgba(255,255,255,0.2);
+                }
+
+                    .header .nav ul li {
+                        display: block;
+                        margin: 0;
+                    }
         }
     </style>
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+   
+    <header class="header">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <div class="row align-items-center justify-content-between">
+                <div class="logo">
+                    <ul>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    </ul>
+                  
+                </div>
+                <button type="button" class="nav-toggler">
+                    <span></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <nav class="nav">
+                    <ul>
+                        @if (TempData["mes"] == "done")
+                        {
+                            <li>@Html.ActionLink("UpProfile", "email_update", "Home")</li>
+                            <li>@Html.ActionLink("DelProfile", "email", "Home")</li>
+                            <li>@Html.ActionLink("Logout", "Index", "Home")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("AdharDetail", "adharDetail", "Home")</li>
+
+                            <li>@Html.ActionLink("Signup", "signup", "Home")</li>
+                            <li>@Html.ActionLink("Signin", "Signin", "Home")</li>
+                        }
+                    </ul>
+                </nav>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("Signup", "signup", "Home")</li>
-                    <li>@Html.ActionLink("Signin", "signin", "Home")</li>*@
-                    @*<li>@Html.ActionLink("Welcome", "welcome", "Home")</li>*@
-                    @*<li>@Html.ActionLink("DelProfile", "email", "Home")</li>*@
-                </ul>
-                <ul class="nav navbar-nav rig">
-                    @if (TempData["mes"] == "done")
-                    {
-                        <li>@Html.ActionLink("UpProfile", "email_update", "Home")</li>
-                        <li>@Html.ActionLink("DelProfile", "email", "Home")</li>
-                        <li>@Html.ActionLink("Logout", "Index", "Home")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("AdharDetail", "adharDetail", "Home")</li>
-                       
-                        <li>@Html.ActionLink("Signup", "signup", "Home")</li>
-                        <li>@Html.ActionLink("Signin", "Signin", "Home")</li>
-                    }
-                </ul>
-            </div>
-          
-          </div>
-    </div>
+        </div>
+    </header>
+
+
+
     <div>
-        
+
         @RenderBody()
         <hr />
         <footer>
-          
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+
+        const navToggler = document.querySelector(".nav-toggler");
+        navToggler.addEventListener("click", navToggle);
+
+        function navToggle() {
+            navToggler.classList.toggle("active");
+            const nav = document.querySelector(".nav");
+            nav.classList.toggle("open");
+            if (nav.classList.contains("open")) {
+                nav.style.maxHeight = nav.scrollHeight + "px";
+            }
+            else {
+                nav.removeAttribute("style");
+            }
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

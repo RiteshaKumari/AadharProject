@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Net.Configuration;
 
 
 namespace Aadhar1.Controllers
@@ -32,6 +33,7 @@ namespace Aadhar1.Controllers
             return View();
         }
         //-------------signup
+       // [ValidateAntiForgeryToken()]
         [Route("signup")]
         public ActionResult signup()
         {
@@ -42,84 +44,87 @@ namespace Aadhar1.Controllers
         [Route("signup")]
         public ActionResult signup(signup up)
         {
-            if (up.ID is null)
-            {
-                try
+          
+                if (up.ID is null)
                 {
-                    SqlParameter[] parameters = new SqlParameter[]
+                    try
                     {
+                        SqlParameter[] parameters = new SqlParameter[]
+                        {
 
                       new SqlParameter("@Email", up.Email),
 
                       new SqlParameter("@Pass", up.Pass),
 
-                    };
-                    var isValid = (int)cs.func_ExecuteScalar("login", parameters);
-                    if (isValid > 0)
-                    {
-                        ModelState.Clear();
-
-                        TempData["message"] = "Data Already Exists.";
-                        return RedirectToAction("signup", "home");
-                    }
-                    else
-                    {
-                        SqlParameter[] parameters2 = new SqlParameter[]
-                      {
-
-                       new SqlParameter("@Email", up.Email),
-
-                      };
-                        var isvalid2 = (int)cs.func_ExecuteScalar("check_data", parameters2);
-                        if (isvalid2 > 0)
+                        };
+                        var isValid = (int)cs.func_ExecuteScalar("login", parameters);
+                        if (isValid > 0)
                         {
-                            TempData["message"] = "Your Email already registered with us.";
+                            ModelState.Clear();
+
+                            TempData["message"] = "Data Already Exists.";
                             return RedirectToAction("signup", "home");
                         }
                         else
                         {
-                            
-                            SqlParameter[] parameters1 = new SqlParameter[]
-                       {
+                            SqlParameter[] parameters2 = new SqlParameter[]
+                          {
+
+                       new SqlParameter("@Email", up.Email),
+
+                          };
+                            var isvalid2 = (int)cs.func_ExecuteScalar("check_data", parameters2);
+                            if (isvalid2 > 0)
+                            {
+                                TempData["message"] = "Your Email already registered with us.";
+                                return RedirectToAction("signup", "home");
+                            }
+                            else
+                            {
+
+                                SqlParameter[] parameters1 = new SqlParameter[]
+                           {
                        new SqlParameter("@Firstname", up.Firstname),
                        new SqlParameter("@Email", up.Email),
                        new SqlParameter("@Mobile", up.Mobile),
                        new SqlParameter("@Pass", up.Pass),
                        new SqlParameter("@ConPass", up.ConPass)
-                       };
-                            var isValid1 = (int)cs.func_ExecuteScalar("add_data", parameters1);
-                            if (isValid1 > 0)
-                            {
-                                ModelState.Clear();
-                                TempData["message"] = "Data Saved.";
-                                return RedirectToAction("signup", "home");
-                            }
-                            else
-                            {
-                                ModelState.Clear();
-                                TempData["message"] = "Something went wrong !";
+                           };
+                                var isValid1 = (int)cs.func_ExecuteScalar("add_data", parameters1);
+                                if (isValid1 > 0)
+                                {
+                                    ModelState.Clear();
+                                    TempData["message"] = "Data Saved.";
+                                    return RedirectToAction("signup", "home");
+                                }
+                                else
+                                {
+                                    ModelState.Clear();
+                                    TempData["message"] = "Something went wrong !";
+                                }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        TempData["errormessage"] = ex.Message;
+                        return View();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    TempData["errormessage"] = ex.Message;
-                    return View();
-                }
-            }
 
 
-            return View();
-
+                return View(up);
+          
+            
         }
 
 
         [Route("Signin")]
         public ActionResult Signin()
         {
+            
 
-            //if (Request.Cookies["value1"].Value == null || Request.Cookies["value1"].Value != "T")
+            //if (Request.Cookies["value1"].Value == "null")
             //{
             //    return RedirectToAction("signin");
 
@@ -128,6 +133,7 @@ namespace Aadhar1.Controllers
             //{
             //    return RedirectToAction("welcome");
             //}
+            
             //else
             //{
             //    return RedirectToAction("signin");
@@ -145,47 +151,141 @@ namespace Aadhar1.Controllers
         {
 
             //---------------fetching data from database
-
-            SqlParameter[] parameters1 = new SqlParameter[]
-                {
+            
+          
+                SqlParameter[] parameters1 = new SqlParameter[]
+                    {
                    new SqlParameter("@Email", user.Email),
                    new SqlParameter("@Pass", user.Pass),
-                };
-            var isValid = (int)cs.func_ExecuteScalar("login", parameters1);
+                    };
+                var isValid = (int)cs.func_ExecuteScalar("login", parameters1);
 
-            if (isValid > 0)
-            {
-                //HttpCookie cookie = new HttpCookie("imp");
+                if (isValid > 0)
+                {
+                    //HttpCookie Cookie = new HttpCookie("imp");
 
-                //if (user.remember == true)
-                //{
-
-
-                //    cookie["value1"] = "T";
-                //    cookie.Expires = DateTime.Now.AddDays(10);
-                //    HttpContext.Response.Cookies.Add(cookie);
-                //}
-                //else
-                //{
+                    //if (user.remember == true)
+                    //{
 
 
-                //    cookie.Expires = DateTime.Now.AddDays(-1);
-                //    HttpContext.Response.Cookies.Add(cookie);
+                    //    Cookie["value1"] = "T";
+                    //    Cookie.Expires = DateTime.Now.AddDays(10);
+                    //    HttpContext.Response.Cookies.Add(Cookie);
+                    //}
+                    //else
+                    //{
 
-                //}
-                ModelState.Clear();
-                TempData["mes"] = "done";
-                ViewBag.Messagelog = "Successfully Login !";
-                return RedirectToAction("welcome", "home");
-            }
-            else
-            {
-                ViewBag.Messagelog = "Something went wrong !";
 
-            }
+                    //    Cookie.Expires = DateTime.Now.AddDays(-1);
+                    //    HttpContext.Response.Cookies.Add(Cookie);
 
+                    //}
+                    ModelState.Clear();
+                    TempData["mes"] = "done";
+                    ViewBag.Messagelog = "Successfully Login !";
+                    return RedirectToAction("welcome", "home");
+                }
+                else
+                {
+                    ViewBag.Messagelog = "Something went wrong !";
+                    return View();
+                }
+         
+           
+        }
+
+
+        [Route("emailValidation")]
+        public ActionResult emailValidation()
+        {
             return View();
         }
+
+        private void sendpassword(String password, String email)
+        {
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.Credentials = new System.Net.NetworkCredential("riteshak246@gmail.com", "usuezfqufanygyei");
+            smtp.EnableSsl = true;
+            MailMessage msg = new MailMessage();
+            msg.Subject = "Forget Password (ADHAR Project)";
+            msg.Body = "Your Password is: " + password + "\n\n Thanks & Regards \n ADHAR Project Team";
+            msg.To.Add(email);
+            msg.From = new MailAddress("ADHAR Project" + email);
+            try
+            {
+                smtp.Send(msg);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("emailValidation")]
+        public ActionResult emailValidation(emailValidation em)
+        {
+            try
+            {
+                if (em.Email != null || em.Email == "")
+                {
+
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    SqlCommand cmd = new SqlCommand("getPassForget", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Email", em.Email);
+
+                    SqlDataReader sdr = cmd.ExecuteReader();
+
+                    if (sdr.Read())
+                    {
+                        if (sdr.HasRows)
+                        {
+                            
+                            String Password = sdr.GetValue(0).ToString();
+                            sendpassword(Password, em.Email);
+                            TempData["verifyEmail"] = "Your Password sent to your email.";
+                           
+                        }
+
+                        else
+                        {
+                            ModelState.Clear();
+                            TempData["message1"] = "Enter Valid Email.";
+                            return RedirectToAction("email_update", "home");
+                        }
+
+                    }
+                    else
+                    {
+                        ModelState.Clear();
+                        TempData["message1"] = "Something went wrong.";
+                        return RedirectToAction("email_update", "home");
+                    }
+                }
+                else
+                {
+                    TempData["message1"] = "Enter email first ! ";
+                    return RedirectToAction("email_update", "home");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                TempData["message1"] = ex.Message;
+                return RedirectToAction("email_update", "home");
+            }
+            return View();
+        }
+
+       
 
         //--------update data
         [Route("email_update")]
@@ -231,27 +331,7 @@ namespace Aadhar1.Controllers
                             int value = random.Next(1001, 9999);
                             TempData["otpGenerated"] = value;
 
-                            //        string destination = "91" + em.phone;
-                            //        string message = "Your OTP number is" + value + "( SentBy : Aadhar Project )";
-                            //        string message1 = HttpUtility.UrlEncode(message);
-                            //        using (var wb = new WebClient())
-                            //        {
-                            //            byte[] response = wb.UploadValues("https://api.txtlocal.com/send/", new NameValueCollection()
-                            //{
-                            //  {"apikey" ,"NWE2NzMyNjc3NjcxNmQ1MTQxN2E3MjUyNjY2MzQyNjc=" },
-                            //    {"numbers" , destination },
-                            //    {"message" , message1 },
-                            //    {"sender" , "TXTLCL"}
-                            //});
-                            //            string result = System.Text.Encoding.UTF8.GetString(response);
-                            //            Session["otp"] = value;
-                            //        }
-
-                            //       if(Session["otp"] != null)
-                            //        return View("VerifyOTP");
-                            //       else
-                            //            return View();
-                            String from, pass, to, messageBody;
+                             String from, pass, to, messageBody;
 
                             MailMessage message = new MailMessage();
                             to = em.Email;
@@ -316,6 +396,36 @@ namespace Aadhar1.Controllers
         }
 
 
+        [Route("VerifyOTP")]
+        public ActionResult VerifyOTP()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+
+        [Route("VerifyOTP")]
+        public ActionResult VerifyOTP(VerifyOTP user)
+        {
+            //TempData["userOTP"] = user.OTP;
+            int ID = Convert.ToInt32(TempData["ID"]);
+            int a = Convert.ToInt32(TempData["otpGenerated"]);
+            if (user.OTP == Convert.ToString(a))
+            {
+                TempData["otpGenerated"] = null;
+                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ID }));
+
+            }
+            else
+            {
+                TempData["otpMess"] = "Invalid OTP";
+                return View();
+            }
+
+        }
+
+
         [Route("updatepage")]
         public ActionResult updatepage(int ID)
         {
@@ -336,7 +446,6 @@ namespace Aadhar1.Controllers
                 gn.Mobile = dataTable.Rows[0][3].ToString();
                 gn.Pass = dataTable.Rows[0][4].ToString();
                 gn.ConPass = dataTable.Rows[0][5].ToString();
-
                 return View(gn);
             }
             else
@@ -361,7 +470,8 @@ namespace Aadhar1.Controllers
                        new SqlParameter("@Mobile", up.Mobile),
                        new SqlParameter("@Pass", up.Pass),
                        new SqlParameter("@ConPass", up.ConPass)
-                    //---------apply validation for email as above---------
+
+                    //---------applying validation for email as above---------
                 };
                 SqlParameter[] parameters2 = new SqlParameter[]
                     {
@@ -379,18 +489,22 @@ namespace Aadhar1.Controllers
                         ModelState.Clear();
 
                         TempData["message"] = "Your Details have Updated.";
-                        //return RedirectToAction("updatepage", "home");
+                        return RedirectToAction("updatepage", "home");
                         
                     }
                     else
                     {
                         TempData["alert"] = "Something Went Wrong !";
-                        //return RedirectToAction("updatepage", "home");
+                        return RedirectToAction("updatepage", "home");
                     }
 
                 }
+                else
+                {
+                    return RedirectToAction("updatepage", "home");
+                }
 
-                return View();
+              
             }
             catch (Exception ex)
             {
@@ -482,34 +596,7 @@ namespace Aadhar1.Controllers
             }
         }
 
-        [Route("VerifyOTP")]
-        public ActionResult VerifyOTP()
-        {
-
-            return View();
-        }
-
-        [HttpPost]
-
-        [Route("VerifyOTP")]
-        public ActionResult VerifyOTP(VerifyOTP user)
-        {
-            //TempData["userOTP"] = user.OTP;
-            int ID = Convert.ToInt32(TempData["ID"]);
-            int a = Convert.ToInt32(TempData["otpGenerated"]);
-           if (user.OTP == Convert.ToString(a))
-            {
-                TempData["otpGenerated"] = null;
-                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ID }));
-              
-            }
-            else 
-            {
-                TempData["otpMess"] = "Invalid OTP";
-                return View();
-            }
-
-        }
+       
 
         public ActionResult adharDetail()
         {

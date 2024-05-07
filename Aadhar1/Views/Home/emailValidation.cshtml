@@ -1,4 +1,4 @@
-﻿@model Aadhar1.Models.email
+﻿@model Aadhar1.Models.emailValidation
 <style>
 
 
@@ -136,34 +136,15 @@
 </style>
 
 
-@using (Html.BeginForm("email", "Home", FormMethod.Post))
+@using (Html.BeginForm("emailValidation", "Home", FormMethod.Post))
 {
-    @*<div class="wrapper">
-            <div class="consign">
-
-                <div class="title"><p>Email</p></div>
-                <p class="view"> @TempData["message1"]</p><br />
-
-
-
-                <label>Enter Email</label> <br />
-                @Html.TextBoxFor(e => e.Email, null, new { @class = "form-control", @placeholder = "abc@gmail.com" })
-                @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
-                <br />
-
-                <input type="submit" value="Submit" class="subbtn" />
-
-
-
-            </div>
-        </div>*@
-
     <div class="body">
         <div class="wrappersignin">
 
             <div class="heading">
                 <h2>Email Verification</h2>
 
+                <strong style="padding-top:5px;">@TempData["verifyEmail"]</strong>
                 <strong style="padding-top:5px;">@TempData["message1"]</strong>
             </div>
 
@@ -177,15 +158,12 @@
 
             <div class="input-group">
                 <button>Submit</button>
+                @* @Html.ActionLink("Submit", "emailValidation", "Home")*@
             </div>
 
         </div>
 
 
-           
-        </div>
-  
 
-
+    </div>
 }
-

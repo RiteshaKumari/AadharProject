@@ -1,19 +1,109 @@
 ﻿@model Aadhar1.Models.signup
 
-@{
-    ViewBag.Title = "signup";
+<style>
+@@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
+
+.signupcontainer {
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(253, 101, 133, 1) 0%,
+    rgba(255, 211, 165, 1) 90%
+  );
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: fit-content;
+  background-color: #ffffff;
+  padding: 10px 30px;
+}
+
+.card_title {
+  text-align: center;
+  padding: 10px;
+}
+
+.card_title h1 {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.form input {
+  margin: 10px 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+}
+
+    .form button {
+        background-color: #4796ff;
+        color: #ffffff;
+        font-size: 16px;
+        outline: none;
+        border-radius: 5px;
+        border: none;
+        padding: 8px 15px;
+        width: 100%;
+        margin: 15px 0px 15px 0px;
+    }
+    .form button:hover {
+        background-color: #31283B;
+    }
+    .form span{
+        color:red;
+    }
+.card_terms {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.card_terms input[type="checkbox"] {
+  background-color: #e2e2e2;
+}
+
+.card_terms span {
+  margin: 5px;
+  font-size: 13px;
+}
+
+.card a {
+  color: #4796ff;
+  text-decoration: none;
+}
+.alert, strong{
+    color:red;
+}
+
+</style>
 
 @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
 {
-    <div class="wrapper1">
+    <!--<div class="wrapper1">
         <div class="consign1">
-            <div class="title"><h1>Signup</h1></div><br />   
+            <div class="title"><h1>Signup</h1></div><br />
             @if (TempData["message"] != null)
             {
-            <div class="alert alert-info">
-                <strong>Message :-</strong>@TempData["message"]
-            </div>
+                <div class="alert alert-info">
+                    <strong>Message :-</strong>@TempData["message"]
+                </div>
 
             }<br /><br />
             <div class="con">
@@ -50,10 +140,7 @@
             </div>
             <div class="con1">
                 <input type="submit" value="Submit" class="subbtn" />
-                @*@using (Html.BeginForm("email", "Home", FormMethod.Post))
-            {
-                <input type="submit" value="Update" class="subbtn" />
-            }*@
+
 
             </div>
             <br />
@@ -68,7 +155,64 @@
                  }
             </script>
         </div>
+    </div>-->
+
+    //-------------------------------------------------------
+
+    <div class="signupcontainer">
+        <div class="card">
+            <div class="card_title">
+                <h1>Create Account</h1>
+                <span>Already have an account? @Html.ActionLink("Signin", "signin", "Home")</span>
+            </div>
+            @if (TempData["message"] != null)
+            {
+                <div class="alert">
+                    <strong>Message :-</strong>@TempData["message"]
+                </div>
+
+            }
+            <div class="form">
+                @*@Html.AntiForgeryToken()*@
+
+                @Html.TextBoxFor(e => e.Firstname, null, new { placeholder = "UserName", @class = "form-control" })
+                @Html.ValidationMessageFor(e => e.Firstname, null, new { @class = "text-danger" })
+
+
+                @Html.TextBoxFor(e => e.Email, null, new { placeholder = "Email", @class = "form-control" })
+                @Html.ValidationMessageFor(e => e.Email, null, new { @class = "text-danger" })
+                <p class="view">@ViewBag.Email</p>
+
+
+
+                @Html.TextBoxFor(e => e.Mobile, null, new { placeholder = "Mobile", @class = "form-control" })
+                @Html.ValidationMessageFor(e => e.Mobile, null, new { @class = "text-danger" })
+
+
+
+                @Html.TextBoxFor(e => e.Pass, null, new { placeholder = "Password", @class = "form-control", @type = "password" })
+                @Html.ValidationMessageFor(e => e.Pass, null, new { @class = "text-danger" })
+
+
+
+
+                @Html.TextBoxFor(e => e.ConPass, null, new { placeholder = "Confirm Password", @class = "form-control", @type = "password" })
+                @Html.ValidationMessageFor(e => e.ConPass, null, new { @class = "text-danger" })
+
+                <button>Sign Up</button>
+
+
+            </div>
+            <script>
+     if (@ViewBag.infor == "true") {
+           $(document).ready(function () {
+         alert("Registered!");
+       });
+      }
+            </script>
+        </div>
     </div>
+
 
 }
 
