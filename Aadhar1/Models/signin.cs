@@ -9,12 +9,12 @@ namespace Aadhar1.Models
 {
     public class signin
     {
-       
-        //[EmailAddress(ErrorMessage = "Invalid Email")]
-       
 
+
+
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         [Required(ErrorMessage = "Please Enter Your Email")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Invalid Email")]
+       // [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Password")]

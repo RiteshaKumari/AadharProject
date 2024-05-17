@@ -9,7 +9,7 @@
 
     <link rel="icon" type="image/x-icon" href="/Content/image/icons8-india-48.png">
     <link href="/Content/CSS/welcome.css" rel="stylesheet" />
-    <link href="~/Content/CSS/sigin.css" rel="stylesheet" />
+    <link href="~/Content/CSS/sigin.css?1.1" rel="stylesheet" />
 
     <style>
         :root {
@@ -203,8 +203,8 @@
                         }
                         else
                         {
-                            <li>@Html.ActionLink("AdharDetail", "adharDetail", "Home")</li>
-
+                            <li>@Html.ActionLink("adhardetail", "adhardetail", "home")</li>
+                            <li>@Html.ActionLink("welcome", "welcome", "home")</li>
                             <li>@Html.ActionLink("Signup", "signup", "Home")</li>
                             <li>@Html.ActionLink("Signin", "Signin", "Home")</li>
                         }
