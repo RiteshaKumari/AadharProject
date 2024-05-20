@@ -32,7 +32,7 @@ namespace Aadhar1.Models
         [RegularExpression("^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string Mobile { get; set; }
 
-        [StringLength(100)]
+        [StringLength(300)]
         [Required(ErrorMessage = "StreetAdd is required")]
         public string StreetAdd { get; set; }
 

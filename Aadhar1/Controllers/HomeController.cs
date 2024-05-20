@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Net.Configuration;
 using System.IO;
 using System.Web.UI.WebControls;
+using System.Security.Cryptography;
 
 
 
@@ -126,24 +127,22 @@ namespace Aadhar1.Controllers
         public ActionResult Signin()
         {
 
-            //if (Request.Cookies["value1"] != null && Request.Cookies["value1"].Value == null)
+
+            //if (Request.Cookies["value1"].Value == "" || Request.Cookies["value1"] == null)
             //{
             //    return RedirectToAction("signin");
             //}
-            if(TempData["remb"].ToString() == "" || TempData["remb"].ToString() == null)
-            {
-                return RedirectToAction("signin");
-            }
-            else if (TempData["remb"].ToString() == "hello" )
-            {
-                return RedirectToAction("welcome");
-            }
-            else
-            {
+            //else if (Request.Cookies["value1"].Value == "T")
+            //{
+            //    return RedirectToAction("welcome");
+            //}
+            //else
+            //{
 
-                return RedirectToAction("signin");
-            }
-           //return View();
+            //    return RedirectToAction("signin");
+            //}
+           
+             return View();
 
 
         }
@@ -587,44 +586,45 @@ namespace Aadhar1.Controllers
         }
 
         [Route("welcome")]
-        public ActionResult welcome(/*int? Id*/)
+        public ActionResult welcome(string Mobile)
         {
-            //if (TempData["mes"] == "done")
-            //{
+           
+            if (TempData["mes"] == "done")
+            {
                 adharDetails gn = new adharDetails();
                 DataTable dataTable = new DataTable();
                 using (SqlConnection con1 = new SqlConnection(str))
                 {
                     con1.Open();
-                    string q = "select * from aadharDetailTable where ID = 1" /*+ Id*/;
+                    string q = "select * from aadharDetailTable where Mobile =" + Mobile;
                     SqlDataAdapter da = new SqlDataAdapter(q, con1);
                     da.Fill(dataTable);
                 }
                 if (dataTable.Rows.Count == 1)
                 {
-                    //gn.ID = Id;
+                   
                     gn.FullName = dataTable.Rows[0][0].ToString();
                     gn.DOF = dataTable.Rows[0][1].ToString();
                     gn.StreetAdd = dataTable.Rows[0][3].ToString();
                     gn.ZIP = dataTable.Rows[0][4].ToString();
                     gn.City = dataTable.Rows[0][5].ToString();
                     gn.Gender = dataTable.Rows[0][6].ToString();
-                    string imgwithpath = dataTable.Rows[0][8].ToString();
-                    //string sirfimg;
-                    //gn.Image = sirfimg;
+                    gn.Image = "/Content/image/"+ dataTable.Rows[0][8].ToString();
+                    TempData["imagepath"] = gn.Image;
                     return View(gn);
                 }
+               
                 else
                 {
-                    TempData["message1"] = "Something went wrong !";
-                    return View("email_update");
+                    TempData["message"] = "Something went wrong !";
+                    return View("adharDetail");
                 }
                 //return View();
-           // }
-            //else
-            //{
-            //    return View("Signin");
-            //}
+            }
+            else
+            {
+                return View("signin");
+            }
         }
 
         [HttpPost]
@@ -641,27 +641,51 @@ namespace Aadhar1.Controllers
         [Route("adharDetail")]
         public ActionResult adharDetail(int? ID)
         {
-            return View();
+          
+            if (TempData["mes"] == "done")
+            {
+                return View();
+            }
+            else
+            {
+                return View("signin");
+            }
         }
 
         [HttpPost]
         [Route("adharDetail")]
-        //file m not comming img from view
+       
         public ActionResult adharDetail(adharDetails aadharD, HttpPostedFileBase Image)
         {
-            if (Image == null || Image.ContentLength == 0)
-            {
-                TempData["message"] = "Please upload your Image!";
-                return View(aadharD);
-            }
-
-        
-
-            try
+           
+                try
                 {
+                    string imagepath;
+                    string filename;
+                    adharDetails fs = new adharDetails();
+                    //fs.filesize = 550;
+                    string us = fs.UploadUserFile(Image);
+                    if (us != null)
+                    {
+                        ViewBag.ResultErrorMessage = fs.ErrorMessage;
+                    }
+                    if (Image != null && Image.ContentLength > 0)
+                    {
+                        filename = Path.GetFileName(Image.FileName);
+                        TempData["imgName"] = filename;
+                        //string imagepath = Path.Combine(Server.MapPath("~/content/image/"), filename);
+                        imagepath = Server.MapPath("~/Content/image/" + filename);
+                        Image.SaveAs(imagepath);
 
-                SqlParameter[] parameters1 = new SqlParameter[]
-                 {
+                    }
+                    else
+                    {
+                        //TempData["message"] = "Please upload your Image!";
+                    }
+                    SqlParameter[] parameters = new SqlParameter[]
+                     {
+
+
                        new SqlParameter("@FullName", aadharD.FullName),
                        new SqlParameter("@DOF", aadharD.DOF),
                        new SqlParameter("@Email", aadharD.Email),
@@ -670,49 +694,56 @@ namespace Aadhar1.Controllers
                        new SqlParameter("@City", aadharD.City),
                         new SqlParameter("@Mobile", aadharD.Mobile),
                        new SqlParameter("@Gender", aadharD.Gender),
-                       new SqlParameter("@Image", aadharD.Image)
+                       new SqlParameter("@Image", TempData["imgName"])
+
+                     };
+                    SqlParameter[] parameters1 = new SqlParameter[]
+                 {
+
+
+                        new SqlParameter("@Mobile", aadharD.Mobile)
+
+
                  };
 
-                adharDetails fs = new adharDetails();
-                fs.filesize = 550;
-                string us = fs.UploadUserFile(Image);
-                if (us != null)
-                {
-                    ViewBag.ResultErrorMessage = fs.ErrorMessage;
-                }
-                if (Image != null && Image.ContentLength > 0)
-                {
-                    string filename = Path.GetFileName(Image.FileName);
-                    string imagepath = Path.Combine(Server.MapPath("~/content/image/"), filename);
-                    Image.SaveAs(imagepath);
+                    var isValid = (int)cs.func_ExecuteScalar("check_mobile", parameters1);
+                    if (isValid > 0)
+                    {
+                        ModelState.Clear();
 
-                }
-                else
-                {
-                    TempData["message"] = "Please upload your Image!";
-                }
-                       var isValid1 = (int)cs.func_ExecuteScalar("aadharDetail", parameters1);
-                       if (isValid1 > 0)
-                            {
-                                ModelState.Clear();
-                                  TempData["mes"] = "done";
-                                  TempData["message"] = "Details Saved.";
-                                return RedirectToAction("welcome", "home");
-                            }
+                        TempData["message"] = "Mobile number Already Exists.";
+                        return RedirectToAction("adharDetail", "home");
+                    }
+                    else
+                    {
+                        var isValid1 = (int)cs.func_ExecuteScalar("aadharDetail", parameters);
+                        if (isValid1 > 0)
+                        {
+                            ModelState.Clear();
+                            TempData["mes"] = "done";
+                            TempData["message"] = "Details Saved.";
+
+                            return RedirectToAction("welcome", new RouteValueDictionary(new { Controller = "Home", Action = "welcome", aadharD.Mobile }));
+
+
+                        }
                         else
-                            {
-                                ModelState.Clear();
-                                TempData["message"] = "Something went wrong !";
-                            }
-                 
-                  }
+                        {
+                            ModelState.Clear();
+                            TempData["message"] = "Something went wrong !";
+                        }
+
+                    }
+                }
                 catch (Exception ex)
                 {
                     TempData["errormessage"] = ex.Message;
                     return View();
                 }
+
+                return View();
             
-            return View();
+          
         }
     }
 }

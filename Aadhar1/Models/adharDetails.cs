@@ -53,26 +53,29 @@ namespace Aadhar1.Models
        
 
         public string ErrorMessage { get; set; }
-        public decimal filesize { get; set; }
+        //public decimal filesize { get; set; }
         public string UploadUserFile(HttpPostedFileBase Image)
         {
             try
             {
-                var supportedTypes = new[] { "txt", "doc", "docx", "pdf", "xls", "xlsx" };
+                var supportedTypes = new[] { "jpg", "png", "jpeg"};
                 var fileExt = System.IO.Path.GetExtension(Image.FileName).Substring(1).ToLower();
                 if (!supportedTypes.Contains(fileExt))
                 {
-                    ErrorMessage = "File Extension Is InValid - Only Upload WORD/PDF/EXCEL/TXT File";
+                    ErrorMessage = "File Extension Is InValid - Only Upload jpg/png/jpeg file";
                     return ErrorMessage;
                 }
-                else if (Image.ContentLength > (filesize * 1024 ))
-                {
-                    ErrorMessage = "File size Should Be UpTo " + filesize + "KB";
-                    return ErrorMessage;
-                }
+                //else if (Image.ContentLength > (filesize * 1024 ))
+                //{
+                //    ErrorMessage = "File size Should Be UpTo " + filesize + "KB";
+
+
+                //    return ErrorMessage;
+                //}
                 else
                 {
-                    ErrorMessage = "File Is Successfully Uploaded";
+                    //ErrorMessage = "Image Is Successfully Uploaded";
+                    ErrorMessage = "";
                     return ErrorMessage;
                 }
             }

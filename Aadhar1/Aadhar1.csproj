@@ -207,7 +207,14 @@
     <Content Include="Content\image\3412737.jpg" />
     <Content Include="Content\image\aadharflag.jpg" />
     <Content Include="Content\image\icons8-india-48.png" />
+    <Content Include="Content\image\image2.jpg" />
     <Content Include="Content\image\images.png" />
+    <Content Include="Content\image\images1.jpg" />
+    <Content Include="Content\image\IMG-20230529-WA0002.jpg" />
+    <Content Include="Content\image\IMG-20230530-WA0003.jpg" />
+    <Content Include="Content\image\IMG-20230530-WA0107.jpg" />
+    <Content Include="Content\image\IMG-20230831-WA0145.jpg" />
+    <Content Include="Content\image\IMG_20230513_225104.jpg" />
     <Content Include="Content\image\img_avatar2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -191,13 +191,13 @@
 
 </style>
 
-@using (Html.BeginForm("adharDetail", "Home", FormMethod.Post, new {enctype ="multipart/form-data" }))
+@using (Html.BeginForm("adharDetail", "Home", FormMethod.Post, new { @enctype ="multipart/form-data" }))
 {
     <div class="body">
         <div class="detailcontainer">
             <div class="title">Enter Aadhar Details</div><br />
             <strong>@TempData["message"] </strong>
-           
+           <strong>@ViewBag.ResultErrorMessage</strong>
             <div class="user__details">
                 <div class="input__box">
                     <span class="details">Full Name</span>
@@ -253,10 +253,10 @@
 
                 </div>
                 <div class="input__box">
-                    <span class="details">Your Image</span>
-                    @Html.TextBoxFor(e => e.Image, null, new { placeholder = "Image", @class = "form-control", @Type = "File" })
+                    <span class="details">Your Image(size Should Be UpTo 550 KB)</span>
+                    @Html.TextBoxFor(e => e.Image, null, new { placeholder = "Image", @class = "form-control", @Type = "File"})
                     @Html.ValidationMessageFor(e => e.Image, null, new { @class = "text-danger" })
-                 
+
 
                 </div>
                 @*<div class="input__box">

@@ -4,6 +4,12 @@
     ViewBag.Title = "welcome";
 }
 
+<style>
+    .outline:target{
+        outline:none;
+    }
+</style>
+
 @*<div class="alert alert-success alert-dismissible" style="margin-bottom:0px;">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>😊Congrates!</strong> for getting your Aadhar.
@@ -12,7 +18,7 @@
 
     <div class="smbox">
         <div>
-            @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control", type = "hidden" })
+            @Html.TextBoxFor(e => e.ID, null, new { @class = "form-control outline", type = "hidden" })
             @Html.ValidationMessageFor(e => e.ID, null, new { @class = "text-danger", type = "hidden" })
             <img src="https://image.pngaaa.com/91/1387091-middle.png" alt="stambh" width="60em" height="auto" />
             <img src="~/Content/image/aadharflag.jpg" width="300px" height="50px" />
@@ -21,25 +27,25 @@
         </div><br />
         <div class="con4">
             <div>
-                @Html.TextBoxFor(e => e.Image, null, new { placeholder = "Image", @class = "form-control", style = "width:100px;height:110px" })
-                @Html.ValidationMessageFor(e => e.Image, null, new { @class = "text-danger" })
+              @*  @Html.TextBoxFor(e => e.Image, null, new {placeholder = "Image", @class = "form-control", style = "width:100px;height:110px" })*@
+              @*  @Html.ValidationMessageFor(e => e.Image, null, new { @class = "text-danger" })*@
             
-                @*<img src="~/Content/image/img_avatar2.png" width="100px" height="110px" class="image" />*@
+                <img src="@TempData["imagepath"] " width="100px" height="110px" class="image" />
             </div>
             <div class="con5">
                 @*<p>Ritesha kumari(hindi)</p>*@
                 <p>
-                    @Html.TextBoxFor(e => e.FullName, null, new { placeholder = "FullName", @class = "form-control", style="border:none;" })
+                    @Html.TextBoxFor(e => e.FullName, null, new { placeholder = "FullName", @class = "form-control outline", style="border:none;" })
                     @Html.ValidationMessageFor(e => e.FullName, null, new { @class = "text-danger " })
                 </p>
 
                 <p>
-                    @Html.TextBoxFor(e => e.DOF, null, new { placeholder = "Date Of Birth", @class = "form-control", style = "border:none;" })
+                    @Html.TextBoxFor(e => e.DOF, null, new { placeholder = "Date Of Birth", @class = "form-control outline", style = "border:none;" })
                     @Html.ValidationMessageFor(e => e.DOF, null, new { @class = "text-danger" })
                 </p>
 
                 <p>
-                    @Html.TextBoxFor(e => e.Gender, null, new { placeholder = "Gender", @class = "form-control", style = "border:none;" })
+                    @Html.TextBoxFor(e => e.Gender, null, new { placeholder = "Gender", @class = "form-control outline", style = "border:none;" })
                     @Html.ValidationMessageFor(e => e.Gender, null, new { @class = "text-danger" })
                 </p>
             </div>
@@ -66,13 +72,13 @@
                 @*<p class="pata">Address:(hindi)</p>
                 <p class="p">hdsgjjjjjjjjjjjjjkkkddkjslnkdfsdk<br />jsdjfeejeekjmf;lrr;e<br />khkjsfdhkj</p><br />*@
                 <p class="pata">
-                    @Html.TextBoxFor(e => e.StreetAdd, null, new { placeholder = "Street Address", @class = "form-control", style = "border:none;" })
+                    @Html.TextBoxFor(e => e.StreetAdd, null, new { placeholder = "Street Address", @class = "form-control outline", style = "border:none;" })
                     @Html.ValidationMessageFor(e => e.StreetAdd, null, new { @class = "text-danger" })
                 </p>
                 <p class="p">
-                    @Html.TextBoxFor(e => e.ZIP, null, new { placeholder = "ZIP or postal code", @class = "form-control", style = "border:none;" })
+                    @Html.TextBoxFor(e => e.ZIP, null, new { placeholder = "ZIP or postal code", @class = "form-control outline", style = "border:none;" })
                     @Html.ValidationMessageFor(e => e.ZIP, null, new { @class = "text-danger" })<br />      
-                    @Html.TextBoxFor(e => e.City, null, new { placeholder = "City", @class = "form-control", style = "border:none;" })
+                    @Html.TextBoxFor(e => e.City, null, new { placeholder = "City", @class = "form-control outline", style = "border:none;" })
                     @Html.ValidationMessageFor(e => e.City, null, new { @class = "text-danger" })<br />
                 </p>
             </div>
