@@ -23,9 +23,9 @@ namespace Aadhar1.Models
         public string DOF { get; set; }
 
 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email")]
-        [Display(Name = "Email")]
+        //[Required(ErrorMessage = "Email is required")]
+        //[EmailAddress(ErrorMessage = "Invalid Email")]
+        //[Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Mobile is required")]

@@ -688,7 +688,7 @@ namespace Aadhar1.Controllers
 
                        new SqlParameter("@FullName", aadharD.FullName),
                        new SqlParameter("@DOF", aadharD.DOF),
-                       new SqlParameter("@Email", aadharD.Email),
+                       //new SqlParameter("@Email", aadharD.Email),
                        new SqlParameter("@StreetAdd", aadharD.StreetAdd),
                        new SqlParameter("@ZIP", aadharD.ZIP),
                        new SqlParameter("@City", aadharD.City),
