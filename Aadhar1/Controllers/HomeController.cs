@@ -16,6 +16,7 @@ using System.Net.Configuration;
 using System.IO;
 using System.Web.UI.WebControls;
 using System.Security.Cryptography;
+using System.Web.ModelBinding;
 
 
 
@@ -48,7 +49,7 @@ namespace Aadhar1.Controllers
         [Route("signup")]
         public ActionResult signup(signup up)
         {
-          
+            if (ModelState.IsValid) { 
                 if (up.ID is null)
                 {
                     try
@@ -116,8 +117,8 @@ namespace Aadhar1.Controllers
                     }
                 }
 
-
-                return View(up);
+            }
+            return View(up);
           
             
         }
@@ -165,22 +166,22 @@ namespace Aadhar1.Controllers
 
                 if (isValid > 0)
                 {
-                HttpCookie Cookie = new HttpCookie("imp");
+                //HttpCookie Cookie = new HttpCookie("imp");
 
-                if (user.remember == true)
-                {
-                    TempData["remb"] = "hello";
-                    Cookie["value1"] = "T";
-                    Cookie.Expires = DateTime.Now.AddDays(10);
-                    HttpContext.Response.Cookies.Add(Cookie);
-                }
-                else
-                {
-                    TempData["remb"] = "";
-                    Cookie.Expires = DateTime.Now.AddDays(-1);
-                    HttpContext.Response.Cookies.Add(Cookie);
+                //if (user.remember == true)
+                //{
+                //    TempData["remb"] = "hello";
+                //    Cookie["value1"] = "T";
+                //    Cookie.Expires = DateTime.Now.AddDays(10);
+                //    HttpContext.Response.Cookies.Add(Cookie);
+                //}
+                //else
+                //{
+                //    TempData["remb"] = "";
+                //    Cookie.Expires = DateTime.Now.AddDays(-1);
+                //    HttpContext.Response.Cookies.Add(Cookie);
 
-                }
+                //}
                 ModelState.Clear();
                     TempData["mes"] = "done";
                     ViewBag.Messagelog = "Successfully Login !";
@@ -321,13 +322,13 @@ namespace Aadhar1.Controllers
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Email", em.Email);
 
-                    SqlDataReader sdr = cmd.ExecuteReader();
+                    SqlDataReader sdr1 = cmd.ExecuteReader();
 
-                    if (sdr.Read())
+                    if (sdr1.Read())
                     {
-                        if (sdr.HasRows)
+                        if (sdr1.HasRows)
                         {
-                            TempData["ID"] = sdr.GetValue(0).ToString();
+                            ViewBag.ID = sdr1.GetValue(0).ToString();
 
                             Random random = new Random();
                             int value = random.Next(1001, 9999);
@@ -411,12 +412,12 @@ namespace Aadhar1.Controllers
         public ActionResult VerifyOTP(VerifyOTP user)
         {
             //TempData["userOTP"] = user.OTP;
-            int ID = Convert.ToInt32(TempData["ID"]);
+            int ID = Convert.ToInt32(ViewBag.ID);
             int a = Convert.ToInt32(TempData["otpGenerated"]);
             if (user.OTP == Convert.ToString(a))
             {
                 TempData["otpGenerated"] = null;
-                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ID }));
+                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ViewBag.ID }));
 
             }
             else
@@ -461,7 +462,8 @@ namespace Aadhar1.Controllers
         [Route("updatepage")]
         public ActionResult updatepage(updatepage up)
         {
-            try
+            if (ModelState.IsValid) { 
+                try
             {
 
                 SqlParameter[] parameters = new SqlParameter[]
@@ -514,6 +516,8 @@ namespace Aadhar1.Controllers
                 return View();
             }
 
+            }
+            return View();
         }
 
         //----------------delete data--------------
@@ -657,7 +661,9 @@ namespace Aadhar1.Controllers
        
         public ActionResult adharDetail(adharDetails aadharD, HttpPostedFileBase Image)
         {
-           
+            if (ModelState.IsValid)
+            {
+
                 try
                 {
                     string imagepath;
@@ -735,12 +741,13 @@ namespace Aadhar1.Controllers
 
                     }
                 }
+
                 catch (Exception ex)
                 {
                     TempData["errormessage"] = ex.Message;
                     return View();
                 }
-
+            }
                 return View();
             
           

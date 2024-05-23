@@ -26,7 +26,7 @@ namespace Aadhar1.Models
         //[Required(ErrorMessage = "Email is required")]
         //[EmailAddress(ErrorMessage = "Invalid Email")]
         //[Display(Name = "Email")]
-        public string Email { get; set; }
+        //public string Email { get; set; }
 
         [Required(ErrorMessage = "Mobile is required")]
         [RegularExpression("^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
