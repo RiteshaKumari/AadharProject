@@ -328,7 +328,7 @@ namespace Aadhar1.Controllers
                     {
                         if (sdr1.HasRows)
                         {
-                            ViewBag.ID = sdr1.GetValue(0).ToString();
+                            TempData["id"] = sdr1.GetValue(0).ToString();
 
                             Random random = new Random();
                             int value = random.Next(1001, 9999);
@@ -412,12 +412,12 @@ namespace Aadhar1.Controllers
         public ActionResult VerifyOTP(VerifyOTP user)
         {
             //TempData["userOTP"] = user.OTP;
-            int ID = Convert.ToInt32(ViewBag.ID);
+            int ID = Convert.ToInt32(TempData["id"]);
             int a = Convert.ToInt32(TempData["otpGenerated"]);
             if (user.OTP == Convert.ToString(a))
             {
                 TempData["otpGenerated"] = null;
-                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ViewBag.ID }));
+                return RedirectToAction("updatepage", new RouteValueDictionary(new { Controller = "Home", Action = "updatepage", ID }));
 
             }
             else
@@ -432,6 +432,7 @@ namespace Aadhar1.Controllers
         [Route("updatepage")]
         public ActionResult updatepage(int? ID)
         {
+           // TempData.ContainsKey("id") -- return boolean value
             updatepage gn = new updatepage();
             DataTable dataTable = new DataTable();
             using (SqlConnection con1 = new SqlConnection(str))
@@ -513,11 +514,11 @@ namespace Aadhar1.Controllers
             catch (Exception ex)
             {
                 TempData["errormessage"] = ex.Message;
-                return View();
-            }
+                    return RedirectToAction("updatepage", "home");
+                }
 
             }
-            return View();
+            return RedirectToAction("updatepage", "home");
         }
 
         //----------------delete data--------------
