@@ -10,7 +10,6 @@ namespace Aadhar1.Models
     {
          public int? ID { get; set; }
 
-       
         [Required(ErrorMessage = "Firstname is required")]
         [StringLength(maximumLength: 30, MinimumLength = 4, ErrorMessage = "max length is 20 and min length is 4")]
         public string FullName { get; set; }
@@ -43,7 +42,7 @@ namespace Aadhar1.Models
         public string City { get; set; }
 
         [Required(ErrorMessage = "Gender is required")]
-        [RegularExpression("(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE|Not prefer to say)$")]
+        [RegularExpression("(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE|Not prefer to say)$", ErrorMessage = "Pattern: (m|M|male|Male|f|F|female|Female|FEMALE|MALE|Not prefer to say)")]
         public string Gender { get; set; }
 
 
